@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<body>
+    <h1>Simple Calculator</h1>
+    <form method="post" action="{% url 'calculate' %}">
+        {% csrf_token %}
+        <label for="num1">Number 1:</label>
+        <input type="number" step="any" id="num1" name="num1" value="{{ num1|default:'' }}" required><br>
+
+        <label for="num2">Number 2:</label>
+        <input type="number" step="any" id="num2" name="num2" value="{{ num2|default:'' }}" required><br>
+
+        <label for="operation">Operation:</label>
+        <select id="operation" name="operation" required>
+            <option value="add" {% if operation == 'add' %}selected{% endif %}>Add</option>
+            <option value="subtract" {% if operation == 'subtract' %}selected{% endif %}>Subtract</option>
+            <option value="multiply" {% if operation == 'multiply' %}selected{% endif %}>Multiply</option>
+            <option value="divide" {% if operation == 'divide' %}selected{% endif %}>Divide</option>
+        </select><br>
+
+        <button type="submit">Calculate</button>
+    </form>
+
+    {% if result is not None %}
+        <h2>Result: {{ result }}</h2>
+    {% endif %}
+</body>
+</html>
